@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Web Messaging</title>
+
+		<meta name="description" content="Web Messaging">
+		<meta name="author" content="Fabian Daun">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="sky">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );    
+		</script>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+				<section>
+					<h1>Web Messaging</h1>
+					<h3>Kommunikation zwischen Webseiten mit HTML5</h3>
+					<p>
+						<small>Created by <a href="https://www.facebook.com/fabian.daun">Fabian Daun</a> </small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Einleitung</h2>
+					<p>
+						Web Messaging ermöglicht den Austausch von Daten zwischen Webseiten im Browser.
+                        <p> </p>
+                        Auch wenn diese nicht von der gleichen Quelle stammen, ohne dass dadurch Cross-Site-Scripting-Angriffe möglich werden. 
+					</p>
+
+				</section>
+<section>
+					<section>
+                        
+              
+                        
+				    <h2>Demo</h2>
+                                            
+                            <input id="meinenachricht" type="text" value="Deine Nachricht"></input>  
+                            <button id="send">Nachricht senden</button>
+                    <p></p>
+                    <p></p>
+                
+                    <iframe id="receiver" src="http://127.0.0.1:53382/reveal.js-2.1/index2.html" width="400" height="400">
+                    </iframe>
+
+                    
+                           <script> 
+                               
+                               window.onload = function() {
+	                           var receiver = document.getElementById('receiver').contentWindow;
+	                           var btn = document.getElementById('send');
+                                
+                                    function sendMessage(e) {
+                                        var nachricht=document.getElementById('meinenachricht');
+                                        e.preventDefault();
+		                                receiver.postMessage(nachricht.value, 'http://127.0.0.1:53382/reveal.js-2.1/index2.html');
+	                                   }
+
+	                               btn.addEventListener('click', sendMessage);
+                                }
+                               
+                               
+                     </script>
+                        
+					</section>
+            
+            <section data-markdown>
+					<script type="text/template">
+					## Sender Seite
+							 
+    window.onload = function() {
+	   var receiver = document.getElementById('receiver').contentWindow;
+	   var btn = document.getElementById('send');    
+         function sendMessage(e) {
+         var nachricht=document.getElementById('meinenachricht');
+         e.preventDefault();
+		   receiver.postMessage(nachricht.value, 'http://127.0.0.1:49826/reveal.js-2.1/index2.html');
+        }
+       btn.addEventListener('click', sendMessage);
+    }
+                      
+					</script>
+				</section>
+            
+            
+            
+            <section data-markdown>
+					<script type="text/template">
+					## Empfänger Seite
+							 
+    window.onload = function() {
+       var messageEle = document.getElementById('message');                           
+       function receiveMessage(e) {
+          if (e.origin == "http://127.0.0.1:49826")
+          messageEle.innerHTML = "Message Received: " + e.data;
+       }
+       window.addEventListener('message', receiveMessage);
+    }
+                      
+					</script>
+				</section>
+	</section>
+        
+        
+        
+				<section>
+					<section data-state="soothe">
+						<h2>HTML5 Web Messaging zur Kommunikation</h2>
+						<p>
+HTML5 Web Messaging definiert Mechanismen zur Kommunikation von Webapplikationen, die in verschiedenem Browserkontext laufen.  <p> </p>So ist es möglich, mit einer Webapplikation auf Daten in einer Webseite zuzugreifen, welche in einem eingebetteten iFrame enthalten sind, das von einer anderen Domain geladen wurde.  <p> </p>Die in HTML5 Web Messaging definierten Mechanismen stellen dabei sicher, dass diese nicht für Cross-Site-Scripting genutzt werden können.
+						</p>
+
+					</section>
+					<section data-state="soothe">
+						<h2>HTML5 Web Messaging als Sicherheitsaspekt</h2>
+                        <p>
+Bislang haben Browser die Kommunikation zwischen Webapplikationen unterschiedlicher Quellen verhindert, um zu vermeident, dass Angreifer auf diesem Weg persönliche Daten auslesen können.<p> </p> Wäre für Webapplikationen ein uneingeschränkter Zugriff auf Daten im Browser möglich, wäre es leicht, Logindaten und Passwörter aus Formularen auszulesen.
+						</p>
+
+						
+					</section>
+					<section data-state="soothe">
+						<h2>HTML5 Web Messaging bietet neue Möglichkeiten</h2>
+					    <p>
+Die Anwendung des Prinzips, dass nur Scripte aus der gleichen Quelle aufeinander zugreifen können, hat Webentwicklern die Umsetzung einiger Applikation unmöglich gemacht.<p> </p> HTML5 Web Messaging bietet einen Ausweg und setzt dazu auf begrenzte Schnittstellen für den Datenaustausch zwischen Webapplikationen im Browser.
+						</p>
+					</section>
+                    
+                    <section data-state="soothe">
+						<h2>HTML5 Web Messaging funktioniert über eingeschränkte Zugriffe</h2>
+					    <p>
+Statt einen direkten Zugriff der Webapplikationen untereinander zu erlauben, sieht der neue Standard vor, dass Webapplikationen Nachrichten beispielsweise über zuvor definierte "Channels" an eingebettete iFrames senden können.<p> </p> Die Adressaten müssen die Nachrichten aus den Channels abholen und auswerten.
+						</p>
+					</section>
+				</section>
+		
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

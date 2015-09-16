@@ -1,0 +1,53 @@
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Koummunikationsseite</title>
+
+		<meta name="description" content="Web Messaging">
+		<meta name="author" content="Fabian Daun">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="sky">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+        
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );    
+
+        </script>
+	
+	</head>
+    
+    
+    
+    <body>
+
+        
+        
+         <h1> Erhaltener Text: </h1>
+         <div id="message"></div>
+        
+                              <script>
+                                        window.onload = function() {
+                                        var messageEle = document.getElementById('message');
+                                            
+                                        function receiveMessage(e) {
+                                            if (e.origin == "http://127.0.0.1:53382")
+                                            messageEle.innerHTML = "Message Received: " + e.data;
+                                        	}
+                                    window.addEventListener('message', receiveMessage);
+                                    }
+                         
+                        </script>   
+        
+    </body>
+        
+</html>
